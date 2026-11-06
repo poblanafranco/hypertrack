@@ -5,7 +5,8 @@
   "main": "src/index.js",
   "type": "commonjs",
   "scripts": {
-    "start": "node src/index.js",
+    "start": "prisma migrate deploy && node src/index.js",
+    "postinstall": "prisma generate",
     "predev": "prisma migrate deploy",
     "dev": "nodemon src/index.js",
     "test": "jest --runInBand",
