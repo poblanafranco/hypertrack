@@ -1,0 +1,50 @@
+generator client {
+  provider      = "prisma-client-js"
+  binaryTargets = ["native", "linux-musl-openssl-3.0.x", "debian-openssl-3.0.x"]
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model User {
+  id              Int              @id @default(autoincrement())
+  name            String
+  email           String           @unique
+  password        String
+  createdAt       DateTime         @default(now())
+  routineEntries  RoutineEntry[]
+  workoutSessions WorkoutSession[]
+}
+
+model RoutineEntry {
+  id        Int      @id @default(autoincrement())
+  day       String
+  muscle    String
+  name      String
+  archived  Boolean  @default(false)
+  createdAt DateTime @default(now())
+  userId    Int
+  user      User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+}
+
+model WorkoutSession {
+  id        Int          @id @default(autoincrement())
+  date      DateTime
+  createdAt DateTime     @default(now())
+  userId    Int
+  user      User         @relation(fields: [userId], references: [id], onDelete: Cascade)
+  sets      WorkoutSet[]
+}
+
+model WorkoutSet {
+  id           Int            @id @default(autoincrement())
+  exerciseName String
+  muscle       String
+  weight       Float
+  reps         Int
+  setNumber    Int
+  sessionId    Int
+  session      WorkoutSession @relation(fields: [sessionId], references: [id], onDelete: Cascade)
+}

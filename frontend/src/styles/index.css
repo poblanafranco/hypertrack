@@ -1,0 +1,132 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&family=Monoton&display=swap');
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+body {
+  font-family: 'Inter', system-ui, sans-serif;
+  -webkit-font-smoothing: antialiased;
+  min-height: 100%;
+  background-color: #0a0612;
+  background-image:
+    radial-gradient(ellipse 900px 500px at 8% -10%, rgba(255, 46, 196, 0.16), transparent 60%),
+    radial-gradient(ellipse 900px 600px at 100% 10%, rgba(176, 38, 255, 0.16), transparent 60%),
+    radial-gradient(ellipse 700px 500px at 50% 110%, rgba(255, 46, 196, 0.10), transparent 60%),
+    repeating-linear-gradient(0deg, rgba(255, 255, 255, 0.025) 0px, rgba(255, 255, 255, 0.025) 1px, transparent 1px, transparent 42px),
+    repeating-linear-gradient(90deg, rgba(255, 255, 255, 0.025) 0px, rgba(255, 255, 255, 0.025) 1px, transparent 1px, transparent 42px);
+  background-attachment: fixed;
+}
+
+::-webkit-scrollbar { width: 8px; }
+::-webkit-scrollbar-track { background: #120a1f; }
+::-webkit-scrollbar-thumb { background: linear-gradient(#ff2ec4, #b026ff); border-radius: 4px; }
+::-webkit-scrollbar-thumb:hover { background: #ff56d6; }
+
+:focus-visible { outline: 2px solid #ff2ec4; outline-offset: 2px; }
+
+@layer components {
+  .glass-card {
+    background: linear-gradient(180deg, rgba(32, 18, 54, 0.85), rgba(14, 8, 24, 0.92));
+    backdrop-filter: blur(10px);
+    border: 1px solid rgba(255, 46, 196, 0.22);
+    box-shadow: 0 8px 30px rgba(0, 0, 0, 0.55), 0 0 22px rgba(255, 46, 196, 0.08), inset 0 0 30px rgba(176, 38, 255, 0.04);
+  }
+
+  .input {
+    @apply w-full bg-dark border border-white/10 rounded-lg p-2.5 text-white text-sm outline-none transition-all duration-200 placeholder:text-gray-600;
+  }
+  .input:focus {
+    border-color: #ff2ec4;
+    box-shadow: 0 0 0 1px #ff2ec4, 0 0 14px rgba(255, 46, 196, 0.45);
+  }
+  .input-error { @apply border-danger; }
+  .input-error:focus {
+    border-color: #ff2b4e;
+    box-shadow: 0 0 0 1px #ff2b4e, 0 0 14px rgba(255, 43, 78, 0.5);
+  }
+
+  .btn {
+    @apply inline-flex items-center justify-center gap-2 font-bold rounded-lg transition-all duration-200 disabled:opacity-50 disabled:cursor-not-allowed;
+  }
+  .btn-primary {
+    @apply btn text-white py-2.5 px-5;
+    background: linear-gradient(135deg, #ff2ec4, #b026ff);
+    box-shadow: 0 0 10px rgba(255, 46, 196, 0.55), 0 0 26px rgba(176, 38, 255, 0.35);
+  }
+  .btn-primary:hover:not(:disabled) {
+    box-shadow: 0 0 16px rgba(255, 46, 196, 0.85), 0 0 42px rgba(176, 38, 255, 0.6);
+    transform: translateY(-1px);
+  }
+  .btn-ghost {
+    @apply btn bg-white/5 hover:bg-white/10 text-gray-100 text-sm py-2 px-4 border border-white/10;
+  }
+  .btn-danger {
+    @apply btn text-white py-2.5 px-5;
+    background: linear-gradient(135deg, #ff2b4e, #ff2ec4);
+    box-shadow: 0 0 10px rgba(255, 43, 78, 0.5), 0 0 26px rgba(255, 46, 196, 0.3);
+  }
+  .btn-danger:hover:not(:disabled) {
+    box-shadow: 0 0 18px rgba(255, 43, 78, 0.85), 0 0 42px rgba(255, 46, 196, 0.5);
+    transform: translateY(-1px);
+  }
+  .icon-btn {
+    @apply inline-flex items-center justify-center rounded-lg p-2 text-gray-400 transition-colors hover:bg-white/10 disabled:opacity-50;
+  }
+  .icon-btn:hover { color: #ff6fe0; }
+
+  /* --- Letrero de neón --- */
+  .neon-sign {
+    font-family: 'Monoton', cursive;
+    letter-spacing: 0.03em;
+    line-height: 1.3;
+  }
+  .neon-pink {
+    color: #ff9bec;
+    text-shadow:
+      0 0 4px #fff,
+      0 0 10px #ff2ec4,
+      0 0 18px #ff2ec4,
+      0 0 38px #ff2ec4,
+      0 0 75px #ff2ec4;
+  }
+  .neon-purple {
+    color: #e2bfff;
+    text-shadow:
+      0 0 4px #fff,
+      0 0 10px #b026ff,
+      0 0 18px #b026ff,
+      0 0 38px #b026ff,
+      0 0 75px #b026ff;
+  }
+  .neon-flicker {
+    animation: neon-flicker 4.5s infinite;
+  }
+  .neon-flicker-slow {
+    animation: neon-flicker 6.5s infinite;
+    animation-delay: 0.6s;
+  }
+
+  /* Tubo de neón decorativo (línea que enmarca tarjetas clave) */
+  .neon-tube {
+    box-shadow:
+      inset 0 0 0 1px rgba(255, 46, 196, 0.5),
+      0 0 8px rgba(255, 46, 196, 0.45),
+      0 0 22px rgba(176, 38, 255, 0.3);
+  }
+}
+
+@keyframes neon-flicker {
+  0%, 17%, 19%, 22%, 24%, 52%, 54%, 100% {
+    opacity: 1;
+    filter: none;
+  }
+  18%, 21%, 23%, 53% {
+    opacity: 0.35;
+    filter: brightness(0.6);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  * { animation-duration: 0.01ms !important; transition-duration: 0.01ms !important; }
+}
